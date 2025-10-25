@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using System; 
+using System.Collections.Immutable;
+using CSConsoleApp.Models;
+using CSConsoleApp.Logic;
 
 namespace CSConsoleApp
 {
@@ -6,34 +9,25 @@ namespace CSConsoleApp
     {
         public static void Main()
         {
-            var currentDirectory = System.IO.Directory.GetCurrentDirectory();
-            var filePath = System.IO.Directory.GetFiles(currentDirectory, "*.csv").First();
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var filePath = Directory.GetFiles(currentDirectory, "*.csv").FirstOrDefault();
 
-            IReadOnlyList<MovieCredit> movieCredits = null;
+            IReadOnlyList<MovieCredit> movieCredits = ImmutableList<MovieCredit>.Empty;
             try
             {
                 var parser = new MovieCreditsParser(filePath);
-                movieCredits = parser.Parse(); // Тип переменной теперь IReadOnlyList<MovieCredit>
+                movieCredits = parser.Parse();
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Не удалось распарсить csv");
+                Console.WriteLine("Не удалось распарсить csv: " + exc.Message);
                 Environment.Exit(1);
             }
-            var top10Actors = movieCredits
-                                .SelectMany(movie => movie.Cast) // Объединяем всех актеров из всех фильмов в одну последовательность
-                                .GroupBy(castMember => castMember.Name) // Группируем по имени актера
-                                .Select(group => new
-                                {
-                                    ActorName = group.Key,
-                                    MovieCount = group.Count() // Считаем количество фильмов для каждого
-                                })
-                                .OrderByDescending(actor => actor.MovieCount) // Сортируем по убыванию количества фильмов
-                                .Take(10); // Берем первые 10
 
-            Console.WriteLine(string.Join(Environment.NewLine, top10Actors.Select(a => $"{a.ActorName} - {a.MovieCount}")));
-            
-
+            var creditsService = new MovieCreditsService(movieCredits);
+            var resultsDirectory = Path.Combine(currentDirectory, "Results");
+            var reporter = new MovieAnalysisReporter(creditsService, resultsDirectory);
+            reporter.RunAllTasks();
         }
     }
 }

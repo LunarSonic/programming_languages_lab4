@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSConsoleApp
+namespace CSConsoleApp.Models
 {
-    public record CrewMember(
+    public record CastMember(
+        [property: JsonProperty("cast_id")] int CastId,
+        [property: JsonProperty("character")] string Character,
         [property: JsonProperty("credit_id")] string CreditId,
-        [property: JsonProperty("department")] string Department,
         [property: JsonProperty("gender")] int Gender,
         [property: JsonProperty("id")] int Id,
-        [property: JsonProperty("job")] string Job,
-        [property: JsonProperty("name")] string Name
+        [property: JsonProperty("name")] string Name,
+        [property: JsonProperty("order")] int Order
     );
 }

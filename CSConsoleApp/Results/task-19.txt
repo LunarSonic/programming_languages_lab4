@@ -1,0 +1,14 @@
+﻿Выявить 'скрытое влияние': Ранжировать все департаменты по среднему количеству актеров:
+---------------------------------------------------------------------------------------
+Crew: Avg Cast Size = 35,02
+Lighting: Avg Cast Size = 33,95
+Visual Effects: Avg Cast Size = 32,84
+Costume & Make-Up: Avg Cast Size = 32,67
+Art: Avg Cast Size = 31,80
+Camera: Avg Cast Size = 30,27
+Sound: Avg Cast Size = 30,12
+Editing: Avg Cast Size = 28,67
+Production: Avg Cast Size = 28,63
+Directing: Avg Cast Size = 25,86
+Writing: Avg Cast Size = 25,16
+Actors: Avg Cast Size = 21,00

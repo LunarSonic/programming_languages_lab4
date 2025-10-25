@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSConsoleApp
+namespace CSConsoleApp.Models
 {
     public sealed class MovieCreditMap : ClassMap<MovieCredit>
     {
